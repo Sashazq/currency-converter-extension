@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="ForEx">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Currency Converter in Angular</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/index.css" type="text/css" />
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div ng-show="!Loading" class="col-xs-12 col-sm-12 col-md-12 col-md-offset-3">
+            <div class="panel panel-default" data-ng-controller="ConvertCtrl">
+                <div class="panel-body">
+                    <form action="" method="POST" role="form">
+                        <legend>Конвертер валют</legend>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="">Из:</label>
+                                <select ng-model="fromType" class="form-control" required data-ng-change="convertCurrency()" ng-options="item.buy as item.ccy for item in rates track by item.buy">
+                                    <option value="">--Валюта--</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="">В:</label>
+                                <select ng-model="toType" class="form-control" required data-ng-change="convertCurrency()" ng-options="item.buy as item.ccy for item in rates track by item.buy">
+                                    <option value="">--Валюта--</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="">Исходное значение</label>
+                                <input type="number" class="form-control" placeholder="Введите значение" data-ng-model="fromValue" data-ng-change="convertCurrency()">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label for="">Конвертированное</label>
+                                <input type="text" class="form-control" readonly data-ng-model="toValue" data-ng-change="convertCurrency()">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div ng-show="Loading" class="col-xs-12 col-sm-12 col-md-12 col-md-offset-3">
+            <h3>Loading...</h3>
+        </div>
+    </div>
+</div>
+<script src="libs/angular.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>
