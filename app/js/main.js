@@ -10,10 +10,10 @@ angular.module('ForEx', [])
     .controller('ConvertCtrl', ['$scope', '$http', 'Rates', function ($scope, $http, Rates) {
         //init app
         //template's models
-         //input models
+        //input models
         $scope.fromValue;
         $scope.toValue;
-         //currency type models
+        //currency type models
         $scope.fromType;
         $scope.toType;
         //
@@ -26,37 +26,45 @@ angular.module('ForEx', [])
          */
         $scope.convertCurrency = function () {
             var result = $scope.fromValue;
-            if ($scope.fromType === "1") { //если конвертируем гривны в другую валюту
-                result = result * $scope.toType;
+
+            if ($scope.fromType.buy === "1") {
+                //if UAH
+                //buy
+                result = result * $scope.fromType.buy / $scope.toType.buy;
             } else {
-                result = result * $scope.fromType / $scope.toType;
+                //sale
+                result = result * $scope.fromType.sale / $scope.toType.sale;
             }
 
-            $scope.toValue = result;
+            $scope.toValue = result.toFixed(3);
         };
 
         var saveRates = function (data) {
                 localStorage.setItem("Rates", JSON.stringify(data));
             },
             setDefaultSettings = function (rates) {
-                $scope.toType = rates[0].ccy;
-                $scope.fromType = rates[1].ccy;
+                $scope.toType = rates[0];
+                $scope.fromType = rates[rates.length - 1];
                 $scope.fromValue = 1;
                 $scope.convertCurrency();
                 $scope.Loading = false;
             };
 
         $scope.rates = Rates.getLocalRates();
+
+        let parseRates = (res) => {
+            let defaultCurrency = {ccy: "UAH", base_ccy: "UAH", buy: "1", sale: "1"};
+            $scope.rates = res.data
+                .map(item => item.ccy.toLocaleLowerCase() !== "btc" ? item : defaultCurrency);
+            //add default rate for UAH to show in select elements
+
+            setDefaultSettings($scope.rates);
+            saveRates($scope.rates);
+        };
+
         if ($scope.rates === null) {
             Rates.getRemoteRates()
-                .then(function (res) {
-                    $scope.rates = res.data;
-                    //add default rate for UAH to show in select elements
-                    $scope.rates.push({ccy: "UAH", base_ccy: "UAH", buy: "1", sale: "1"});
-
-                    setDefaultSettings($scope.rates);
-                    saveRates($scope.rates);
-                });
+                .then(parseRates);
         } else {
             $scope.rates = JSON.parse($scope.rates);
             setDefaultSettings($scope.rates);

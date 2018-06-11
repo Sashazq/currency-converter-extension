@@ -2,11 +2,11 @@
 <html lang="en" data-ng-app="ForEx">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Currency Converter in Angular</title>
     <!-- Latest compiled and minified CSS & JS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/index.css" type="text/css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="css/index.css" type="text/css"/>
 </head>
 
 <body>
@@ -17,35 +17,49 @@
                 <div class="panel-body">
                     <form action="" method="POST" role="form">
                         <legend>Конвертер валют</legend>
+                        <!--//top fields-->
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label for="">Из:</label>
-                                <select ng-model="fromType" class="form-control" required data-ng-change="convertCurrency()" ng-options="item.buy as item.ccy for item in rates track by item.buy">
-                                    <option value="">--Валюта--</option>
+                                <label for="">Отдаем:</label>
+                                <select ng-model="fromType" class="form-control" required
+                                        data-ng-change="convertCurrency()"
+                                        ng-options="item as item.ccy for item in rates track by item.buy">
                                 </select>
 
                             </div>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label for="">В:</label>
-                                <select ng-model="toType" class="form-control" required data-ng-change="convertCurrency()" ng-options="item.buy as item.ccy for item in rates track by item.buy">
-                                    <option value="">--Валюта--</option>
+                                <label for="">Получаем:</label>
+                                <select ng-model="toType" class="form-control" required
+                                        data-ng-change="convertCurrency()"
+                                        ng-options="item as item.ccy for item in rates track by item.buy">
                                 </select>
                             </div>
                         </div>
+
+                        <!--bottom fields-->
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label for="">Исходное значение</label>
-                                <input type="number" class="form-control" placeholder="Введите значение" data-ng-model="fromValue" data-ng-change="convertCurrency()">
+                                <label for="">Количество</label>
+                                <input type="number" class="form-control" placeholder="Введите значение"
+                                       data-ng-model="fromValue" data-ng-change="convertCurrency()">
                             </div>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label for="">Конвертированное</label>
-                                <input type="text" class="form-control" readonly data-ng-model="toValue" data-ng-change="convertCurrency()">
+                                <label for="">Приватбанк</label>
+                                <input type="text" class="form-control" readonly data-ng-model="toValue"
+                                       data-ng-change="convertCurrency()">
                             </div>
                         </div>
+                        <!--<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 pull-right">-->
+                        <!--<div class="form-group">-->
+                        <!--<label for="">Наличные</label>-->
+                        <!--<input type="text" class="form-control" readonly data-ng-model="toValue"-->
+                        <!--data-ng-change="convertCurrency()">-->
+                        <!--</div>-->
+                        <!--</div>-->
 
                     </form>
                 </div>
